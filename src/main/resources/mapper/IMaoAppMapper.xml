@@ -30,11 +30,6 @@
         <if test="isOfficial == 0">
             where a.app_id != '100'
         </if>
-        <if test="orderAction == 'book'">
-            order by a.book_start_time desc
-        </if>
-        <if test="orderAction == 'rush'">
-            order by a.rush_start_time desc
-        </if>
+        order by a.sort
     </select>
 </mapper>
