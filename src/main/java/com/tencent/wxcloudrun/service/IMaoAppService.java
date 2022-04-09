@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IMaoAppService {
 
-    List<IMaoApp> selectList(String wxId);
+    List<IMaoApp> selectList(String wxId,String orderAction,Integer isOfficial);
 
     void insertSubscribe(String wxId,String appId);
 

@@ -21,8 +21,8 @@ public class IMaoAppServiceImpl implements IMaoAppService {
     UserSubscribeMapper userSubscribeMapper;
 
     @Override
-    public List<IMaoApp> selectList(String wxId) {
-        return iMaoAppMapper.selectList(wxId);
+    public List<IMaoApp> selectList(String wxId, String orderAction, Integer isOfficial) {
+        return iMaoAppMapper.selectList(wxId, orderAction, isOfficial);
     }
 
     public void insertSubscribe(String wxId, String appId) {

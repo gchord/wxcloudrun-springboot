@@ -9,5 +9,7 @@ import java.util.List;
 @Mapper
 public interface IMaoAppMapper {
 
-   List<IMaoApp> selectList(@Param("wxId") String wxId);
+   List<IMaoApp> selectList(@Param("wxId") String wxId,
+                            @Param("orderAction") String orderAction,
+                            @Param("isOfficial") Integer isOfficial);
 }

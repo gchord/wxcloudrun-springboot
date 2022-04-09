@@ -20,18 +20,20 @@ public class IMaoAppController {
     IMaoAppService iMaoAppService;
 
     @GetMapping(value = "/api/apps")
-    ApiResponse get(@RequestParam("wxId") String wxId) {
+    ApiResponse get(@RequestParam("wxId") String wxId,
+                    @RequestParam(value = "orderAction", required = false) String orderAction,
+                    @RequestParam(value = "isOfficial", required = false, defaultValue = "0") Integer isOfficial) {
         logger.info("/api/apps get request");
-        List<IMaoApp> iMaoAppList = iMaoAppService.selectList(wxId);
+        List<IMaoApp> iMaoAppList = iMaoAppService.selectList(wxId, orderAction, isOfficial);
         return ApiResponse.ok(iMaoAppList);
     }
 
     @PostMapping(value = "/api/user/subscribe")
     ApiResponse postSubscribe(@RequestBody SubscribeRequest subReq) {
         logger.info("/api/user/subscribe " + subReq.getAction());
-        if("add".equals(subReq.getAction())){
+        if ("add".equals(subReq.getAction())) {
             iMaoAppService.insertSubscribe(subReq.getWxId(), subReq.getAppId());
-        }else if("del".equals(subReq.getAction())){
+        } else if ("del".equals(subReq.getAction())) {
             iMaoAppService.deleteSubscribe(subReq.getWxId(), subReq.getAppId());
         }
         return ApiResponse.ok();

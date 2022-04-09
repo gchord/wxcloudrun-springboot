@@ -22,4 +22,12 @@ public class IMaoApp implements Serializable {
     private Integer sort;
 
     private Integer isSub;
+
+    private String bookStartTime;
+
+    private String bookEndTime;
+
+    private String rushStartTime;
+
+    private String rushEndTime;
 }

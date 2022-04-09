@@ -11,13 +11,30 @@
         <result property="appPath" column="app_path" javaType="java.lang.String"/>
         <result property="sort" column="sort" javaType="java.lang.Integer" />
         <result property="isSub" column="is_sub" javaType="java.lang.Integer"/>
+        <result property="bookStartTime" column="book_start_time" javaType="java.lang.String"/>
+        <result property="bookEndTime" column="book_end_time" javaType="java.lang.String"/>
+        <result property="rushStartTime" column="rush_start_time" javaType="java.lang.String"/>
+        <result property="rushEndTime" column="rush_end_time" javaType="java.lang.String"/>
+
     </resultMap>
 
     <select id="selectList" resultMap="iMaoAppMap">
         SELECT a.app_id,a.app_name,a.app_logo,a.app_path,a.app_desc,
-        CASE WHEN b.app_id IS NULL THEN 0 else 1 END is_sub
+        CASE WHEN b.app_id IS NULL THEN 0 else 1 END is_sub,a.book_start_time,a.book_end_time,a.rush_start_time,a.rush_end_time
         FROM i_mao_app a
         LEFT JOIN user_subscribe b
         ON a.app_id = b.app_id AND b.wx_id = #{wxId}
+        <if test="isOfficial == 1">
+            where a.app_id = '100'
+        </if>
+        <if test="isOfficial == 0">
+            where a.app_id != '100'
+        </if>
+        <if test="orderAction == 'book'">
+            order by a.book_start_time desc
+        </if>
+        <if test="orderAction == 'rush'">
+            order by a.rush_start_time desc
+        </if>
     </select>
 </mapper>
