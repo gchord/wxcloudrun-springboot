@@ -30,6 +30,6 @@
         <if test="isOfficial == 0">
             where a.app_id != '100'
         </if>
-        order by a.sort desc
+        order by a.sort
     </select>
 </mapper>
