@@ -19,7 +19,7 @@
     </resultMap>
 
     <select id="selectList" resultMap="iMaoAppMap">
-        SELECT a.app_id,a.app_name,a.app_logo,a.app_path,a.app_desc,
+        SELECT a.app_id,a.app_name,a.app_logo,a.app_path,a.app_desc,a.sort,
         CASE WHEN b.app_id IS NULL THEN 0 else 1 END is_sub,a.book_start_time,a.book_end_time,a.rush_start_time,a.rush_end_time
         FROM i_mao_app a
         LEFT JOIN user_subscribe b
@@ -30,6 +30,6 @@
         <if test="isOfficial == 0">
             where a.app_id != '100'
         </if>
-        order by a.sort
+        order by a.sort desc
     </select>
 </mapper>
