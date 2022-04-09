@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.IMaoAppMapper">
+
+    <resultMap id="iMaoAppMap" type="com.tencent.wxcloudrun.model.IMaoApp">
+        <id property="id" column="id"/>
+        <result property="appId" column="app_id" javaType="java.lang.String"/>
+        <result property="appName" column="app_name" javaType="java.lang.String"/>
+        <result property="appLogo" column="app_logo" javaType="java.lang.String"/>
+        <result property="appDesc" column="app_desc" javaType="java.lang.String"/>
+        <result property="appPath" column="app_path" javaType="java.lang.String"/>
+        <result property="sort" column="sort" javaType="java.lang.Integer" />
+        <result property="isSub" column="is_sub" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="iMaoAppMap">
+        SELECT a.app_id,a.app_name,a.app_logo,a.app_path,a.app_desc,
+        CASE WHEN b.app_id IS NULL THEN 0 else 1 END is_sub
+        FROM i_mao_app a
+        LEFT JOIN user_subscribe b
+        ON a.app_id = b.app_id AND b.wx_id = #{wxId}
+    </select>
+</mapper>

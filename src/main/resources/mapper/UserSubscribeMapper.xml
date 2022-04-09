@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.UserSubscribeMapper">
+
+    <resultMap id="userSubscribeMap" type="com.tencent.wxcloudrun.model.UserSubscribe">
+        <id property="id" column="id"/>
+        <result property="appId" column="app_id" javaType="java.lang.String"/>
+        <result property="wxId" column="wx_id" javaType="java.lang.String"/>
+        <result property="createTime" column="create_time" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+
+    <select id="selectByAppIdUserId" resultType="java.lang.Integer" parameterType="com.tencent.wxcloudrun.model.UserSubscribe">
+        SELECT count(*)
+        FROM `user_subscribe`
+        WHERE wx_id = #{wxId} and `app_id` = #{appId}
+    </select>
+
+    <delete id="deleteByAppIdUserId" parameterType="com.tencent.wxcloudrun.model.UserSubscribe">
+        DELETE FROM `user_subscribe`
+        WHERE wx_id = #{wxId} and `app_id` = #{appId}
+    </delete>
+
+    <insert id="insert" parameterType="com.tencent.wxcloudrun.model.UserSubscribe">
+        INSERT INTO `user_subscribe`
+        (`wx_id`, `app_id`, `create_time`)
+        VALUES (#{wxId}, #{appId}, #{createTime})
+    </insert>
+
+</mapper>
