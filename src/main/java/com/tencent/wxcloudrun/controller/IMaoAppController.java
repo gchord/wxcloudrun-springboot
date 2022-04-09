@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.dto.SubscribeRequest;
 import com.tencent.wxcloudrun.model.IMaoApp;
 import com.tencent.wxcloudrun.service.IMaoAppService;
 import org.slf4j.Logger;
@@ -26,18 +27,14 @@ public class IMaoAppController {
     }
 
     @PostMapping(value = "/api/user/subscribe")
-    ApiResponse postSubscribe(@RequestParam("wxId") String wxId,
-                          @RequestParam("appId") String appId) {
-        logger.info("/api/user/subscribe post");
-        iMaoAppService.insertSubscribe(wxId, appId);
+    ApiResponse postSubscribe(@RequestBody SubscribeRequest subReq) {
+        logger.info("/api/user/subscribe " + subReq.getAction());
+        if("add".equals(subReq.getAction())){
+            iMaoAppService.insertSubscribe(subReq.getWxId(), subReq.getAppId());
+        }else if("del".equals(subReq.getAction())){
+            iMaoAppService.deleteSubscribe(subReq.getWxId(), subReq.getAppId());
+        }
         return ApiResponse.ok();
     }
 
-    @DeleteMapping(value = "/api/user/subscribe")
-    ApiResponse deleteSubscribe(@RequestParam("wxId") String wxId,
-                          @RequestParam("appId") String appId) {
-        logger.info("/api/user/subscribe delete");
-        iMaoAppService.deleteSubscribe(wxId, appId);
-        return ApiResponse.ok();
-    }
 }
